@@ -1,0 +1,16 @@
+{
+  "node": {
+    "72ebddb1c7c7cbef6f6daa828e34a5c86426853e": {
+      "workers": {
+        "app/(root)/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fvaughnscott%2FDesktop%2Fclone-test-main%2Fnode_modules%2F%40clerk%2Fnextjs%2Fdist%2Fesm%2Fapp-router%2Fserver-actions.js%22%2C%5B%22invalidateCacheAction%22%5D%5D%5D&__client_imported__=true!",
+        "app/(root)/video/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fvaughnscott%2FDesktop%2Fclone-test-main%2Fnode_modules%2F%40clerk%2Fnextjs%2Fdist%2Fesm%2Fapp-router%2Fserver-actions.js%22%2C%5B%22invalidateCacheAction%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/(root)/page": "action-browser",
+        "app/(root)/video/page": "action-browser"
+      }
+    }
+  },
+  "edge": {},
+  "encryptionKey": "spb3fqkxDTFqudi2Z/fSpX8B88mrZa0uBGywyyh2zrQ="
+}

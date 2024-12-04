@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .input-class {
+    @apply text-base placeholder:text-base bg-zinc-900 rounded-[6px] placeholder:text-gray-400 border-none text-gray-100;
+  }
+  .podcast_grid {
+    @apply grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3;
+  }
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+  .flex-between {
+    @apply flex justify-between items-center;
+  }
+  .flex-start {
+    @apply flex justify-start items-center;
+  }
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+    border-radius: 2px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #09090a;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #5c5c7b;
+    border-radius: 50px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #7878a3;
+  }
+  .common-container {
+    @apply flex flex-col flex-1 items-center gap-10 overflow-scroll py-10 px-5 md:px-8 lg:p-14 custom-scrollbar;
+  }
+  .navigation_container {
+    @apply fixed top-0 right-0 h-screen w-screen bg-black-1 bg-opacity-50 z-50;
+  }
+  .navigation_menu {
+    @apply h-screen w-[70%] bg-black-2 px-8 py-6;
+  }
+  .left_sidebar {
+    @apply hidden md:flex px-6 py-10 flex-col justify-between min-w-[270px] bg-black-2;
+  }
+  .right_sidebar {
+    @apply flex flex-col gap-12 px-6 py-10 min-w-[270px] bg-black-2 max-xl:hidden;
+  }
+  .user_card {
+    @apply flex gap-2 rounded-xl p-4 cursor-pointer bg-black-1;
+  }
+  .podcast_card {
+    @apply flex flex-col gap-4 rounded-xl p-4 cursor-pointer bg-black-1;
+  }
+  .podcast_creator {
+    @apply flex flex-col gap-6 p-6 rounded-xl bg-black-1;
+  }
+  .podcast_player {
+    @apply flex w-full gap-4 items-center flex-col p-4 bg-black-1;
+  }
+  .podcast_info {
+    @apply flex flex-col gap-3 p-4 bg-black-1 rounded-xl;
+  }
+  .audio_player {
+    @apply w-full bg-black-3 rounded-xl p-4;
+  }
+  .audio_wave {
+    @apply w-full h-14 bg-black-2 rounded-lg;
+  }
+  .audio_input {
+    @apply w-full h-1 bg-gray-1;
+  }
+  .audio_timeline {
+    @apply w-full h-1 bg-orange-1;
+  }
+  .glassmorphism-black {
+    @apply bg-black-1 backdrop-blur p-4;
+  }
+}

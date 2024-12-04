@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RapidAPI Media Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f0f2f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #1557b0;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: none;
+        }
+        .error {
+            color: #d32f2f;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #fde8e8;
+            border-radius: 4px;
+            display: none;
+        }
+        .loading {
+            display: none;
+            margin: 20px 0;
+            text-align: center;
+            color: #666;
+        }
+        .format {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        .format a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+        .format a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>RapidAPI Media Test</h1>
+        
+        <div class="input-group">
+            <input type="text" id="urlInput" placeholder="Enter YouTube URL" />
+            <button onclick="getInfo()" id="submitBtn">Get Info</button>
+        </div>
+
+        <div id="loading" class="loading">
+            Loading...
+        </div>
+
+        <div id="error" class="error"></div>
+
+        <div id="result" class="result">
+            <h2 id="videoTitle"></h2>
+            <div id="videoInfo"></div>
+            <div id="formats"></div>
+        </div>
+    </div>
+
+    <script>
+        const urlInput = document.getElementById('urlInput');
+        const submitBtn = document.getElementById('submitBtn');
+        const loading = document.getElementById('loading');
+        const error = document.getElementById('error');
+        const result = document.getElementById('result');
+        const videoTitle = document.getElementById('videoTitle');
+        const videoInfo = document.getElementById('videoInfo');
+        const formats = document.getElementById('formats');
+
+        async function getInfo() {
+            // Reset UI
+            error.style.display = 'none';
+            result.style.display = 'none';
+            loading.style.display = 'block';
+            submitBtn.disabled = true;
+
+            try {
+                const response = await fetch('/api/info', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ url: urlInput.value })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to get video info');
+                }
+
+                // Display results
+                videoTitle.textContent = data.title || 'Video Title Not Available';
+                
+                let infoHtml = '';
+                if (data.duration) {
+                    infoHtml += `<p>Duration: ${data.duration}</p>`;
+                }
+                if (data.thumbnail) {
+                    infoHtml += `<img src="${data.thumbnail}" alt="Thumbnail" style="max-width: 200px;" />`;
+                }
+                videoInfo.innerHTML = infoHtml;
+
+                // Display formats
+                let formatsHtml = '<h3>Available Formats:</h3>';
+                if (Array.isArray(data.formats)) {
+                    data.formats.forEach((format, index) => {
+                        if (format.url && format.quality) {
+                            formatsHtml += `
+                                <div class="format">
+                                    <strong>Quality:</strong> ${format.quality}<br>
+                                    <strong>Format:</strong> ${format.ext || 'Unknown'}<br>
+                                    ${format.filesize ? `<strong>Size:</strong> ${Math.round(format.filesize / 1024 / 1024)}MB<br>` : ''}
+                                    <a href="${format.url}" target="_blank">Download</a>
+                                </div>`;
+                        }
+                    });
+                } else {
+                    formatsHtml += '<p>No formats available</p>';
+                }
+                formats.innerHTML = formatsHtml;
+
+                result.style.display = 'block';
+            } catch (err) {
+                error.textContent = err.message;
+                error.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        }
+
+        // Allow Enter key to submit
+        urlInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                getInfo();
+            }
+        });
+    </script>
+</body>
+</html>
